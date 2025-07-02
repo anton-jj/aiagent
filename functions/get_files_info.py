@@ -1,19 +1,31 @@
-import os
+import os 
 
 def get_files_info(working_directory, directory=None):
+    if directory is None:
+        directory = "."
+
     path = os.path.join(working_directory, directory)
-    outside_working_dir = is_outside_working_dir(path)
-    if outside_working_dir():
-        f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
-    
-    if os.path.isdir(path) == False:
-        f'Error: "{directory}" is not a directory'
-
-def is_outside_working_dir(path):
-    work_dir = os.path.abspath(os.getcwd())
     abs_path = os.path.abspath(path)
-    common = os.path.commonpath([work_dir, abs_path])
-    return common != work_dir
+    working_dir_abs = os.path.abspath(working_directory)
+    print(abs_path)
 
-def is_dir(directory):
+    if not abs_path.startswith(working_dir_abs):
+        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
+    
+    if not os.path.isdir(abs_path):
+        return f'Error: "{directory}" is not a directory'
+
+    result_lines = []
+    for item in os.listdir(path):
+        item_path = os.path.join(path, item)
+        is_dir = os.path.isdir(item_path)
+        file_size = os.path.getsize(item_path)
+
+        result_lines.append(f"- {item}: file_size={file_size} bytes, is_dir={is_dir}")
+
+    return "\n".join(result_lines)
+    
+
+
+
 
