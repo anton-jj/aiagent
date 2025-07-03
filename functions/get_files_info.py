@@ -1,10 +1,12 @@
 import os 
 
 def get_files_info(working_directory, directory=None):
-    if directory is None:
-        directory = "."
+    if directory is None or directory == ".":
+        path = working_directory
+    else: 
+        path = os.path.join(working_directory, directory)
 
-    path = os.path.join(working_directory, directory)
+
     abs_path = os.path.abspath(path)
     working_dir_abs = os.path.abspath(working_directory)
     print(abs_path)
@@ -16,7 +18,7 @@ def get_files_info(working_directory, directory=None):
         return f'Error: "{directory}" is not a directory'
 
     result_lines = []
-    for item in os.listdir(path):
+    for item in os.listdir(abs_path):
         item_path = os.path.join(path, item)
         is_dir = os.path.isdir(item_path)
         file_size = os.path.getsize(item_path)
