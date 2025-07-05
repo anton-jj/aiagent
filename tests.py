@@ -1,20 +1,13 @@
 
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
+from functions.wrtie_file import write_file
+from functions.run_python import run_python_file
 
-print("result for current directory")
-print(get_files_info("calculator", "."))
+print(run_python_file("calculator", "main.py"))
 
-print("\nresult for 'pkg' direcotry")
-print(get_files_info("calculator", "pkg"))
+print(run_python_file("calculator", "tests.py"))
 
-print("\nresult for '/bin' direcotry")
-print(get_files_info("calculator", "/bin"))
+print(run_python_file("calculator", "../main.py"))
 
-print("\nresult for '../' direcotry")
-print(get_files_info("calculator", "../"))
-
-print("testing the get file_content")
-print(get_file_content("calculator", "main.py"))
-
-print(get_file_content("calculator", "lorem.txt"))
+print(run_python_file("calculator", "nonexistent.py"))
