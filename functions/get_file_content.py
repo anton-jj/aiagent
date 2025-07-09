@@ -16,7 +16,6 @@ schema_get_file_content = types.FunctionDeclaration(
     ),
 )
 def get_file_content(working_directory, file_path):
-    print("im called")
     working_abs_path = os.path.abspath(working_directory)
     target_abs_path = os.path.abspath(os.path.join(working_directory, file_path))
 
