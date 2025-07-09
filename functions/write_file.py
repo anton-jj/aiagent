@@ -6,11 +6,17 @@ schema_write_file = types.FunctionDeclaration(
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "file": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="Write or overwrite files",
+                description="Path to file to write or overwrite",
             ),
+            "Content": types.Schema(
+                type=types.Type.STRING,
+                description="Content to write to the file"
+
+            )
         },
+        required=["file_path", "Content"],
     ),
 )
 def write_file(working_directory, file_path, content):

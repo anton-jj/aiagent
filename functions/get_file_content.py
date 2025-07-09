@@ -1,9 +1,9 @@
 import os
 from google.genai import types
-from config import max_chars
+max_chars = 10000
 schema_get_file_content = types.FunctionDeclaration(
     name="get_file_content",
-    description=f"Read and returns first {max_chars} of the contents in the fiel",
+    description=f"Read and returns first {max_chars} of the contents in the file within the working directory",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
@@ -12,9 +12,11 @@ schema_get_file_content = types.FunctionDeclaration(
                 description="The path to a file whose content should be read",
             ),
         },
+        required=["file_path"]
     ),
 )
 def get_file_content(working_directory, file_path):
+    print("im called")
     working_abs_path = os.path.abspath(working_directory)
     target_abs_path = os.path.abspath(os.path.join(working_directory, file_path))
 
@@ -41,7 +43,6 @@ def get_file_content(working_directory, file_path):
 
     except Exception as e:
         return f'Error reading file: {e}'
-    
+
 
     return contents
-
