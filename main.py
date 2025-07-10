@@ -1,4 +1,3 @@
-import re
 import os
 from dotenv import load_dotenv
 from google import genai
@@ -52,6 +51,16 @@ def create_content(client, messages, verbose):
                     print(response_data["error"])
             else:
                 print("Unknown response structure:", response_data)
+    # LOG THE RAW RESPONSE!
+    else:
+        print("DEBUG: Model did not return a function call.")
+        print("DEBUG FULL RESPONSE:", response)
+        # Or, if you want just the plain text response parts:
+        if hasattr(response, "candidates"):
+            for cand in response.candidates:
+                if cand.content and cand.content.parts:
+                    for p in cand.content.parts:
+                        print("DEBUG PART:", p)
 
 def call_function(function_call_part, verbose=False):
     function_name = function_call_part.name
@@ -62,7 +71,7 @@ def call_function(function_call_part, verbose=False):
     args["working_directory"] = "./calculator"
 
     if verbose:
-        print(f"-> Calling function: {function_call_part.name}({args})")
+        print(f"->Calling function: {function_call_part.name}({args})")
     else:
         print(f" - Calling function: {function_call_part.name}")
 
